@@ -19,6 +19,7 @@ def Binary(N, total, LSB):
         B.append(int(b_num[j]))
     return B
 
+################################################################
 def QFT(qc, q, qubits, **kwargs):
     R_phis = [0]
     for i in np.arange(2,int(qubits+1)):
