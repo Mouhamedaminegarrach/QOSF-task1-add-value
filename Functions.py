@@ -1,5 +1,4 @@
 from qiskit import  QuantumCircuit, Aer, execute,BasicAer
-from qiskit.visualization import plot_histogram
 import Functions as oq
 import numpy as np
 import math as m
@@ -48,9 +47,7 @@ def QRAM():
     qc.draw(output='mpl') #draw our QRAM circuit
 
     backend = BasicAer.get_backend('qasm_simulator')
-    job = execute(qc, backend)
-    plot_histogram(job.result().get_counts()) 
-    
+    job = execute(qc, backend)    
 
     counts = job.result().get_counts()
     print(qc)
