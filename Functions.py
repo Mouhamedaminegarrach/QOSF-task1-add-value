@@ -4,6 +4,55 @@ import math as m
 S_simulator = Aer.backends(name='statevector_simulator')[0]
 
 ################################################################
+def QRAM():
+    
+    qc = QuantumCircuit(13,13)
+    qc.h(0)
+    qc.h(1)
+    qc.h(2)
+    qc.barrier()
+
+    qc.mcx([0,1,2],3)
+    qc.x(2)
+    qc.mcx([0,1,2],4)
+    qc.x(2)
+    qc.x(1)
+    qc.mcx([0,1,2],5)
+    qc.x(2)
+    qc.mcx([0,1,2],6)
+    qc.x(2)
+    qc.x(1)
+    qc.x(0)
+    qc.mcx([0,1,2],7)
+    qc.x(0)
+    qc.barrier()
+
+    qc.cx(3,10)
+    qc.cx(3,12)
+    qc.cx(4,10)
+    qc.cx(4,11)
+    qc.cx(4,12)
+    qc.cx(5,9)
+    qc.cx(6,9)
+    qc.cx(6,12)
+    qc.cx(7,12)
+    qc.barrier()
+
+    qc.measure([0,1,2,3,4,5,6,7,8,9,10,11,12],[0,1,2,3,4,5,6,7,8,9,10,11,12])
+    qc.draw(output='mpl')
+
+    backend = BasicAer.get_backend('qasm_simulator')
+    job = execute(qc, backend)
+    plot_histogram(job.result().get_counts())
+    
+
+    counts = job.result().get_counts()
+    print(qc)
+    
+
+    
+    return(counts)
+################################################################
 def Binary(N, total, LSB):
     qubits = int(m.log(total,2))
     b_num = np.zeros(qubits)
